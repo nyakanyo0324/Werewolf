@@ -17,7 +17,7 @@ app.post('/chatwork-webhook', async (req, res) => {
     const messageBody = event?.body ?? '（本文なし）';
 
     // Discordにシンプルなテキストとして送信
-    const discordMessage = { content: messageBody };
+    const discordMessage = { content: '```\n' + messageBody + '\n```' };
 
     const response = await fetch(DISCORD_WEBHOOK_URL, {
       method : 'POST',
