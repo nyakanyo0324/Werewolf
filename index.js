@@ -13,31 +13,12 @@ app.post('/chatwork-webhook', async (req, res) => {
     const body = req.body;
     console.log('Chatwork Webhook受信:', JSON.stringify(body, null, 2));
 
-    // Chatworkのwebhookペイロードからメッセージ内容を取得
     const event       = body.webhook_event;
-    const messageBody = event?.body          ?? '（本文なし）';
-    const senderId    = event?.from_account_id ?? '不明';
-    const roomId      = event?.room_id         ?? '不明';
+    const messageBody = event?.body ?? '（本文なし）';
 
-    // Discordに送るメッセージを組み立て
-    const discordMessage = {
-      username  : 'Chatwork Bot',
-      avatar_url: 'https://www.chatwork.com/favicon.ico',
-      embeds: [
-        {
-          title      : '💬 Chatworkに新しい投稿があります',
-          description: messageBody,
-          color      : 0xe8453c, // Chatworkの赤
-          fields: [
-            { name: '送信者ID', value: String(senderId), inline: true },
-            { name: 'ルームID', value: String(roomId),   inline: true },
-          ],
-          timestamp: new Date().toISOString(),
-        }
-      ]
-    };
+    // Discordにシンプルなテキストとして送信
+    const discordMessage = { content: messageBody };
 
-    // Discord Webhook に POST
     const response = await fetch(DISCORD_WEBHOOK_URL, {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
