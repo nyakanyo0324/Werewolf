@@ -1,0 +1,15 @@
+{
+  "name": "chatwork-to-discord",
+  "version": "1.0.0",
+  "description": "Chatwork webhook を Discord に転送するサーバー",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
